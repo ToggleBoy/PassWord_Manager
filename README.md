@@ -1,5 +1,7 @@
 # PassWord_Manager
-Using basic Encryption and Decryption Method
+Using Python 
+
+Basic Encryption and Decryption Method
 
 The Data's are been stored in json file format.
 
