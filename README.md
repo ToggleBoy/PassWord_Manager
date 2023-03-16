@@ -1,5 +1,5 @@
 # PassWord_Manager
-Using Python 
+Using Python Programming Language with tkinter GUI 
 
 Basic Encryption and Decryption Method
 
