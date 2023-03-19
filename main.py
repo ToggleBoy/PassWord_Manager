@@ -2,7 +2,7 @@ import json
 from tkinter import *
 from tkinter import messagebox
 from random import choice, randint, shuffle
-import pyperclip
+# import pyperclip
 
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
@@ -28,7 +28,7 @@ def generate_password():
 
     password_entry.insert(END, f"{password}")
 
-    pyperclip.copy(password)
+    # pyperclip.copy(password)
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
@@ -96,8 +96,14 @@ def save_data():
                 json.dump(data, file, indent=4)
 
         finally:
+            with open("Your-Data.json", 'r') as file:
+                data = json.load(file)
+                website_show.delete(0, END)
+                for key, value in data.items():
+                    website_show.insert(1, f'{key}')
             website_entry.delete(0, END)
             password_entry.delete(0, END)
+            username_entry.delete(0, END)
 
 
 # ---------------------------- Show Data ------------------------------ #
@@ -186,32 +192,52 @@ def remove_password():
             finally:
                 website_entry.delete(0, END)
                 password_entry.delete(0, END)
+                with open("Your-Data.json", 'r') as file:
+                    data = json.load(file)
+                    website_show.delete(0, END)
+                    for key, value in data.items():
+                        website_show.insert(1, f'{key}')
+                
 
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
 window.title("PassWord Manager.")
-window.config(padx=50, pady=50, bg="white")
+window.config(padx=50, pady=50, bg="#99d2de")
 
-canvas = Canvas(width=200, height=200, bg="white", highlightthickness=0)
+canvas = Canvas(width=200, height=200, bg="#99d2de", highlightthickness=0)
 logo = PhotoImage(file="logo.png")
 canvas.create_image(100, 100, image=logo)
 canvas.grid(column=1, row=0)
 
 # Website
-website_label = Label(text="Website :", bg="white")
+website_label = Label(text="Website :", bg="#99d2de")
 website_label.grid(column=0, row=1)
 
 website_entry = Entry(width=31)
 website_entry.grid(column=1, row=1)
 website_entry.focus()
 
+website_show = Listbox(width=31, height=5, bg="#8fb1b8", fg="white")
+
+try:
+    with open("Your-Data.json", 'r') as file:
+        data = json.load(file)
+        for key, value in data.items():
+            website_show.insert(1, f'{key}')
+except FileNotFoundError:
+    website_show.insert(1, '')
+else:
+    website_show.insert(1, '')
+      
+website_show.grid(column=1,row=2)
+
 # empty label
-empty_label = Label(bg="white")
+empty_label = Label(bg="#99d2de")
 empty_label.grid(column=0, row=2)
 
 # username
-id_username_label = Label(text="Email/Username :", bg="white")
+id_username_label = Label(text="Email/Username :", bg="#99d2de")
 id_username_label.grid(column=0, row=3)
 
 username_entry = Entry(width=49)
@@ -219,21 +245,21 @@ username_entry.grid(column=1, row=3, columnspan=2)
 # username_entry.insert(END, "@gmail.com")
 
 # empty label
-empty_label = Label(bg="white")
+empty_label = Label(bg="#99d2de")
 empty_label.grid(column=0, row=4)
 
 # password
-password_label = Label(text="Password :", bg="white")
+password_label = Label(text="Password :", bg="#99d2de")
 password_label.grid(column=0, row=5)
 
 password_entry = Entry(width=31)
 password_entry.grid(column=1, row=5)
 
 # empty label
-empty_label = Label(bg="white")
+empty_label = Label(bg="#99d2de")
 empty_label.grid(column=0, row=6)
 
-empty_label = Label(bg="white")
+empty_label = Label(bg="#99d2de")
 empty_label.grid(column=0, row=8)
 
 # button
@@ -252,5 +278,6 @@ search_button.grid(column=2, row=1)
 remove_button = Button(text="Delete Password", width=42, borderwidth=0.5)
 remove_button.config(command=remove_password)
 remove_button.grid(column=1, row=9, columnspan=2)
+
 
 window.mainloop()
