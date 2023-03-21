@@ -112,6 +112,10 @@ def save_data():
 def show_data():
     website = website_entry.get()
 
+    # added listbox selection to search 
+    for i in website_show.curselection():
+        website = website_show.get(i)
+
     if website == "":
         messagebox.showinfo(title="Caution!!", message="Please don't leave any fields Empty ")
     else:
@@ -168,6 +172,10 @@ def show_data():
 def remove_password():
     website = website_entry.get()
 
+    # added listbox selection to search 
+    for i in website_show.curselection():
+        website = website_show.get(i)
+
     if website == "":
         messagebox.showinfo(title="Caution!!", message="Please don't leave any fields Empty ")
     else:
@@ -223,12 +231,15 @@ website_show = Listbox(width=31, height=5, bg="#8fb1b8", fg="white")
 try:
     with open("Your-Data.json", 'r') as file:
         data = json.load(file)
+        list_id = 0
         for key, value in data.items():
-            website_show.insert(1, f'{key}')
+            website_show.insert(list_id, f'{key}')
+            list_id += 1
 except FileNotFoundError:
     website_show.insert(1, '')
 else:
-    website_show.insert(1, '')
+    # website_show.insert(1, '')
+    None
       
 website_show.grid(column=1,row=2)
 
