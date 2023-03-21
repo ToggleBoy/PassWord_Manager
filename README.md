@@ -15,5 +15,5 @@ ThankYou.
 # How to Download
 Click the "Code" dropdown and then press "Download as Zip".
 
-After it Downloaded just unzip and open "main.exe" file.
+After it Downloaded just unzip and open "Pw Manager.exe" file.
 
